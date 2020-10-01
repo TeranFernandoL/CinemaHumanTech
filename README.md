@@ -10,7 +10,7 @@ Se debe tener instalado en el proyecto :
 1.- Clonar el Proyecto 
 
 
-git clone https://github.com/TeranFernandoL/sspg-backend.git
+git clone https://github.com/TeranFernandoL/CinemaHumanTech.git
 
 
 2.- De preferencia usar virtualenv para crear un entorno y instalar las librerias 
@@ -62,3 +62,6 @@ python manage.py createsuperuser --settings='config.settings.local'
 
 
 python manage.py runserver 8000 --settings='config.settings.local'
+
+
+Se recomienda tener un archivo .env para sus variables de entorno.
