@@ -28,30 +28,9 @@ class CreateUserAPIView(generics.CreateAPIView):
         return Response({'token': token.key}, status=status.HTTP_200_OK)
 
 
-class ListCreateUserAPIView(generics.ListCreateAPIView):
-    serializer_class = RetrieveUserSerializer
-
-    def get_queryset(self):
-        return User.objects.filter(gender='HOMBRE')
-
-
 class RUDUserAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RetrieveUserSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
         return self.request.user
-
-
-class ChangePasswordAPIView(generics.GenericAPIView):
-    '''Cambiar contraseña para usuario logueado'''
-    permission_classes = IsAuthenticated,
-    serializer_class = ChangePasswordSerializer
-
-    def put(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={"user": request.user})
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save()
-        return Response({"detail": "OK"}, status=status.HTTP_200_OK)

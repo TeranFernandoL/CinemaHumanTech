@@ -37,49 +37,9 @@ class LoginSerializer(serializers.Serializer):
         return self.user_cache
 
 
-class UserSerializer(serializers.ModelSerializer):
+class RetrieveUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
             'id', 'email', 'first_name', 'last_name', 'phone', 'photo', 'address', 'dni')
         read_only_fields = ('id', 'email')
-
-
-class RetrieveUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'id', 'email', 'first_name', 'last_name', 'phone', 'photo', 'address',  'dni')
-        read_only_fields = ('id', 'email')
-
-
-class ChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField(
-        error_messages={"blank": "Este campo es obligatorio"})
-    new_password = serializers.CharField(
-        error_messages={"blank": "Este campo es obligatorio"})
-    email = serializers.EmailField(
-        error_messages={"blank": "Este campo es obligatorio"})
-
-    def validate(self, attrs):
-        user = self.context.get("user")
-        if attrs.get("email") != user.email:
-            raise serializers.ValidationError({"email": "Email mismatch"})
-        if not user.check_password(attrs.get("old_password")):
-            raise serializers.ValidationError({"password": "Password mismatch"})
-        return attrs
-
-    def save(self, **kwargs):
-        user = self.context.get("user")
-        user.set_password(self.validated_data.get("new_password"))
-        user.save()
-
-
-class PasswordRecoverySerializer(serializers.Serializer):
-    email = serializers.EmailField()
-
-    def validate_email(self, value):
-        self.cached_user = User.objects.filter(email=value).first()
-        if not self.cached_user:
-            raise serializers.ValidationError("The email is not registered")
-        return value
