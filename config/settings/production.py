@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = True
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='z8j30%9q-jk9x!^j5q6#r+2bzc)#3kh#y-frt(5er+qpt-*en3')
+DEBUG = False
+SECRET_KEY = env('SECRET_KEY')
 ALLOWED_HOSTS = [
     "67.207.94.55"
 ]
@@ -9,9 +9,9 @@ ALLOWED_HOSTS = [
 DATABASES = {
     'default': {
         'ENGINE': "django.db.backends.postgresql_psycopg2",
-        'NAME': "humantechdb",
-        'USER': "postgres",
-        'PASSWORD': "postgres",
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '',
     }

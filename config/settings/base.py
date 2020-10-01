@@ -16,11 +16,11 @@ import environ
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('apps')
 env = environ.Env()
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=True)
 if READ_DOT_ENV_FILE:
     env.read_env(str(ROOT_DIR.path('.env')))
 
-SECRET_KEY = 'z8j30%9q-jk9x!^j5q6#r+2bzc)#3kh#y-frt(5er+qpt-*en3'
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env.bool('DJANGO_DEBUG', False)
 ALLOWED_HOSTS = []
@@ -120,9 +120,5 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 APPSECRET_PROOF = False
 ADMIN_URL = 'admin/'
-ADMINS = [
-    ("""Luis Fernando Teran Poma""", 'fernand.teran96@gmail.com'),
-]
 TIME_INPUT_FORMATS = ('%H:%M',)
 AUTH_USER_MODEL = 'users.User'
-MANAGERS = ADMINS
