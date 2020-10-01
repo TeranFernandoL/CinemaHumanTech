@@ -35,12 +35,12 @@ schema_view = get_schema_view(
 urlpatterns = [
                   path(settings.ADMIN_URL, admin.site.urls),
                   path(
-                      "api/v1/users",
-                      include("apps.users.urls", namespace="users"),
+                      "api/v1/user/",
+                      include("apps.users.urls", namespace="user"),
                   ),
                   path(
-                      "api/v1/movies",
-                      include("apps.movies.urls", namespace="movies"),
+                      "api/v1/cinema/",
+                      include("apps.movies.urls", namespace="cinema"),
                   ),
                   re_path(r'^swagger(?P<format>\.json|\.yaml)/$', schema_view.without_ui(cache_timeout=None),
                           name='schema-json'),
